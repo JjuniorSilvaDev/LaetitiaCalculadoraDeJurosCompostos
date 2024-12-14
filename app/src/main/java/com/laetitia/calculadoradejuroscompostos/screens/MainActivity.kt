@@ -1,8 +1,9 @@
-package com.laetitia.calculadoradejuroscompostos
+package com.laetitia.calculadoradejuroscompostos.screens
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.laetitia.calculadoradejuroscompostos.R
 
 class MainActivity : AppCompatActivity() {
 

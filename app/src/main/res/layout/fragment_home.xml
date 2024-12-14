@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".screens.Home">
+
+        <Toolbar
+            android:id="@+id/toolBarFragment"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:title="@string/app_name"
+            android:textAlignment="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/initialInvestmentTitleFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Investimento Inicial (R$)"
+            app:layout_constraintBottom_toTopOf="@id/initialInvestmentInputFragment"
+            app:layout_constraintStart_toStartOf="@id/initialInvestmentInputFragment"
+            />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/initialInvestmentInputFragment"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:hint="00,00"
+            app:layout_constraintTop_toBottomOf="@id/toolBarFragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/monthlyContributionTitleFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aporte Mensal (R$)"
+            app:layout_constraintBottom_toTopOf="@id/monthlyContributionInputFragment"
+            app:layout_constraintStart_toStartOf="@id/monthlyContributionInputFragment"
+            />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/monthlyContributionInputFragment"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:hint="00,00"
+            app:layout_constraintTop_toBottomOf="@id/initialInvestmentInputFragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/interestRateTitleFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Taxa de Juros (%)"
+            app:layout_constraintBottom_toTopOf="@id/interestRateInputFragment"
+            app:layout_constraintStart_toStartOf="@id/interestRateInputFragment"
+            />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/interestRateInputFragment"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:hint="00,00"
+            app:layout_constraintTop_toBottomOf="@id/monthlyContributionInputFragment"
+            app:layout_constraintEnd_toStartOf="@id/interestRateSpinnerFragment"
+            app:layout_constraintStart_toStartOf="@id/monthlyContributionInputFragment"
+            />
+
+        <Spinner
+            android:id="@+id/interestRateSpinnerFragment"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/interestRateInputFragment"
+            app:layout_constraintEnd_toEndOf="@id/monthlyContributionInputFragment"
+            app:layout_constraintBottom_toBottomOf="@id/interestRateInputFragment"
+            app:layout_constraintStart_toEndOf="@id/interestRateInputFragment"
+            />
+
+        <TextView
+            android:id="@+id/periodTitleFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Período de Tempo"
+            app:layout_constraintBottom_toTopOf="@id/periodInputFragment"
+            app:layout_constraintStart_toStartOf="@id/periodInputFragment"
+            />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/periodInputFragment"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:hint="Digite o período de tempo"
+            app:layout_constraintTop_toBottomOf="@id/interestRateInputFragment"
+            app:layout_constraintEnd_toStartOf="@id/periodSpinnerFragment"
+            app:layout_constraintStart_toStartOf="@id/interestRateInputFragment"
+            />
+
+        <Spinner
+            android:id="@+id/periodSpinnerFragment"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/periodInputFragment"
+            app:layout_constraintEnd_toEndOf="@id/interestRateSpinnerFragment"
+            app:layout_constraintBottom_toBottomOf="@id/periodInputFragment"
+            app:layout_constraintStart_toEndOf="@id/periodInputFragment"
+            />
+
+        <Button
+            android:id="@+id/calculateButtonFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Calcular"
+            app:layout_constraintTop_toBottomOf="@id/periodInputFragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
