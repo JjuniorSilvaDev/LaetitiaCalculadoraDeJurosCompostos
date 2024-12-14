@@ -3,6 +3,8 @@
     <style name="Base.Theme.LaetitiaCalculadoraDeJurosCompostos" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:indeterminateTint">@android:color/white</item>
+        <item name="android:progressTint">@android:color/white</item>
     </style>
 
     <style name="Theme.LaetitiaCalculadoraDeJurosCompostos" parent="Base.Theme.LaetitiaCalculadoraDeJurosCompostos" />
