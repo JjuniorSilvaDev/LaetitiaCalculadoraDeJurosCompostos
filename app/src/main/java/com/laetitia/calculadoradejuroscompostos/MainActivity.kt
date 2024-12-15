@@ -131,7 +131,13 @@ class MainActivity : AppCompatActivity() {
             }
 
             else -> {
-                showAlert("Todos os campos foram preenchidos")
+                
+                valueAssignment()
+
+                matchInterestRateTimeframeWithPeriod()
+
+                calculateCompoundInterestWithMonthlyContribution()
+
             }
         }
     }
@@ -213,6 +219,7 @@ class MainActivity : AppCompatActivity() {
 
         val calcResult =
             initialInvestmentValue * (BigDecimal.ONE + interestRateValue).pow(periodValue)
+
         val totalInterest = calcResult - initialInvestmentValue
         val formatSymbols = DecimalFormatSymbols().apply {
             decimalSeparator = ','
@@ -233,6 +240,19 @@ class MainActivity : AppCompatActivity() {
             initialInvestmentValue * (BigDecimal.ONE + interestRateValue).pow(periodValue) + monthlyContributionValue * (((BigDecimal.ONE + interestRateValue).pow(
                 periodValue
             ) - BigDecimal.ONE) / interestRateValue)
+
+val totalInterest = calcResult - initialInvestmentValue
+        val formatSymbols = DecimalFormatSymbols().apply {
+            decimalSeparator = ','
+            groupingSeparator = '.'
+        }
+        val formatter = DecimalFormat("#,##0.00", formatSymbols)
+        val calcResultString = formatter.format(calcResult)
+        val totalInterestString = formatter.format(totalInterest)
+        val message =
+            String.format("Total Investido (Capital): R$ $initialInvestmentValue\n\nJuros Totais: $totalInterestString\n\nValor Total (Montante): $calcResultString")
+
+        showAlert(message)
 
     }
 
