@@ -10,7 +10,7 @@
     <string name="period_text">Período de Tempo</string>
     <string name="period_value_text">12</string>
     <string name="calculate_text_button">Calcular</string>
-    <string name="loading_text">Carregando...</string>
+    <string name="loading_text">Carregando…</string>
     <string-array name="interest_rate_spinner">
         <item>Ao Ano</item>
         <item>Ao Mês</item>

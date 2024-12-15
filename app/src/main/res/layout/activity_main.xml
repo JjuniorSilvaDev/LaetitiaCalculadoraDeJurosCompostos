@@ -1,18 +1,204 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.MainActivity">
+    android:fillViewport="true">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".MainActivity">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/navHostFragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:navGraph="@navigation/screens_navigation"
+    <TextView
+        android:id="@+id/appTitleFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         />
 
+    <TextView
+        android:id="@+id/initialInvestmentTitleFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/initial_investment_text"
+        app:layout_constraintBottom_toTopOf="@id/initialInvestmentInputFragment"
+        app:layout_constraintStart_toStartOf="@id/initialInvestmentInputFragment"
+        />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/initialInvestmentInputFragment"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="100dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:lines="1"
+        android:inputType="numberDecimal"
+        android:background="@drawable/background_input_text"
+        android:hint="@string/value_text"
+        app:layout_constraintTop_toBottomOf="@id/appTitleFragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/monthlyContributionTitleFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/monthly_contribution_text"
+        app:layout_constraintBottom_toTopOf="@id/monthlyContributionInputFragment"
+        app:layout_constraintStart_toStartOf="@id/monthlyContributionInputFragment"
+        />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/monthlyContributionInputFragment"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:background="@drawable/background_input_text"
+        android:layout_marginTop="70dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:lines="1"
+        android:inputType="numberDecimal"
+        android:hint="@string/value_text"
+        app:layout_constraintTop_toBottomOf="@id/initialInvestmentInputFragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/interestRateTitleFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/interest_rate_text"
+        app:layout_constraintBottom_toTopOf="@id/interestRateInputFragment"
+        app:layout_constraintStart_toStartOf="@id/interestRateInputFragment"
+        />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/interestRateInputFragment"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:background="@drawable/background_input_text"
+        android:layout_marginTop="70dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:lines="1"
+        android:inputType="number"
+        android:hint="@string/interest_rate_input_text"
+        app:layout_constraintTop_toBottomOf="@id/monthlyContributionInputFragment"
+        app:layout_constraintEnd_toStartOf="@id/interestRateSpinnerFragment"
+        app:layout_constraintStart_toStartOf="@id/monthlyContributionInputFragment"
+        />
+
+    <Spinner
+        android:id="@+id/interestRateSpinnerFragment"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:drawablePadding="8dp"
+        android:entries="@array/interest_rate_spinner"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@id/interestRateInputFragment"
+        app:layout_constraintEnd_toEndOf="@id/monthlyContributionInputFragment"
+        app:layout_constraintStart_toEndOf="@id/interestRateInputFragment"
+        app:layout_constraintTop_toTopOf="@id/interestRateInputFragment" />
+
+    <TextView
+        android:id="@+id/periodTitleFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/period_text"
+        app:layout_constraintBottom_toTopOf="@id/periodInputFragment"
+        app:layout_constraintStart_toStartOf="@id/periodInputFragment"
+        />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/periodInputFragment"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:background="@drawable/background_input_text"
+        android:layout_marginTop="70dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:lines="1"
+        android:inputType="number"
+        android:hint="@string/period_value_text"
+        app:layout_constraintTop_toBottomOf="@id/interestRateInputFragment"
+        app:layout_constraintEnd_toStartOf="@id/periodSpinnerFragment"
+        app:layout_constraintStart_toStartOf="@id/interestRateInputFragment"
+        />
+
+    <Spinner
+        android:id="@+id/periodSpinnerFragment"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:entries="@array/period_spinner"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="@id/periodInputFragment"
+        app:layout_constraintEnd_toEndOf="@id/interestRateSpinnerFragment"
+        app:layout_constraintBottom_toBottomOf="@id/periodInputFragment"
+        app:layout_constraintStart_toEndOf="@id/periodInputFragment"
+        />
+
+    <Button
+        android:id="@+id/calculateButtonFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="@string/calculate_text_button"
+        app:layout_constraintTop_toBottomOf="@id/periodInputFragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <View
+        android:id="@+id/loadScreenViewFragmen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#88000000"
+        android:visibility="invisible"
+        />
+
+    <ProgressBar
+        android:id="@+id/loadProgressBarFragment"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"
+        />
+
+    <TextView
+        android:id="@+id/loadTextViewFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:text="@string/loading_text"
+        android:visibility="invisible"
+        app:layout_constraintTop_toBottomOf="@id/loadProgressBarFragment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
