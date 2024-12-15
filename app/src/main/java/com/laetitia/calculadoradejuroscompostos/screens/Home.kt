@@ -125,5 +125,17 @@ class Home : Fragment() {
         }
     }
 
+private fun calculateCompoundInterestWithoutMonthlyContribution(initialInvestment: Double, interestRate: Double, period: Int) {
+
+val calcResult = initialInvestment * Math.pow((1+interestRate), period)
+
+}
+
+private fun calculateCompoundInterestWithMonthlyContribution(initialInvestment: Double, interestRate: Double, period: Int, monthlyContribution: Double) {
+
+Val calcResult = initialInvestment * Math.pow((1+interestRate), period) + monthlyContribution * ((Math.pow((1+interestRate), period) -1)/interestRate)
+
+}
+
 
 }
