@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.laetitia.calculadoradejuroscompostos"
-        minSdk = 23
+        minSdk = 21
         targetSdk = 35
         versionCode = 1000
         versionName = "1.000"
