@@ -9,7 +9,6 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.Spinner
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.laetitia.calculadoradejuroscompostos.databinding.ActivityMainBinding
@@ -71,6 +70,7 @@ class MainActivity : AppCompatActivity() {
     private fun inflateItems() {
         setupDecimalEditText(initialInvestment)
         setupDecimalEditText(monthlyContribution)
+        setupDecimalEditText(interestRate)
         loadScreenView.setOnClickListener { }
         calculateButton.setOnClickListener {
             checkFields()
@@ -131,7 +131,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             else -> {
-                
+
                 valueAssignment()
 
                 matchInterestRateTimeframeWithPeriod()
@@ -183,35 +183,47 @@ class MainActivity : AppCompatActivity() {
 
     private fun matchInterestRateTimeframeWithPeriod() {
 
-        val newInterestValue: BigDecimal = when {
+//        val newInterestValue: BigDecimal = when {
+//
+//            periodSpinner.selectedItem.toString() == resources.getStringArray(R.array.period_spinner)[0].toString() &&
+//                    interestRateSpinner.selectedItem.toString() == resources.getStringArray(R.array.interest_rate_spinner)[1].toString() -> {
+//
+//                (BigDecimal.ONE + interestRateValue).pow(12) - BigDecimal.ONE
+//
+//            }
+//
+//            periodSpinner.selectedItem.toString() == resources.getStringArray(R.array.period_spinner)[1].toString() &&
+//                    interestRateSpinner.selectedItem.toString() == resources.getStringArray(R.array.interest_rate_spinner)[0].toString() -> {
+//
+//                val monthlyRate = BigDecimal.ONE + interestRateValue
+//                val fractionalExponent =
+//                    BigDecimal("1").divide(BigDecimal("12"), 10, RoundingMode.HALF_UP)
+//
+//                val result = monthlyRate.toDouble().pow(fractionalExponent.toDouble())
+//                BigDecimal(result) - BigDecimal.ONE
+//
+//            }
+//
+//            else -> {
+//
+//                interestRateValue
+//
+//            }
+//
+//        }
 
-            periodSpinner.selectedItem.toString() == resources.getStringArray(R.array.period_spinner)[0].toString() &&
-                    interestRateSpinner.selectedItem.toString() == resources.getStringArray(R.array.interest_rate_spinner)[1].toString() -> {
-
-                (BigDecimal.ONE + interestRateValue).pow(12) - BigDecimal.ONE
-
-            }
-
-            periodSpinner.selectedItem.toString() == resources.getStringArray(R.array.period_spinner)[1].toString() &&
-                    interestRateSpinner.selectedItem.toString() == resources.getStringArray(R.array.interest_rate_spinner)[0].toString() -> {
-
-                val monthlyRate = BigDecimal.ONE + interestRateValue
-                val fractionalExponent = BigDecimal("1").divide(BigDecimal("12"), 10, RoundingMode.HALF_UP)
+        if (interestRateSpinner.selectedItem.toString() == resources.getStringArray(R.array.interest_rate_spinner)[0]){
+            val monthlyRate = BigDecimal.ONE + interestRateValue
+                val fractionalExponent =
+                    BigDecimal("1").divide(BigDecimal("12"), 10, RoundingMode.HALF_UP)
 
                 val result = monthlyRate.toDouble().pow(fractionalExponent.toDouble())
-                BigDecimal(result) - BigDecimal.ONE
-
-            }
-
-            else -> {
-
-                interestRateValue
-
-            }
-
+            interestRateValue = BigDecimal(result) - BigDecimal.ONE
         }
 
-        interestRateValue = newInterestValue
+        if (periodSpinner.selectedItem.toString() == resources.getStringArray(R.array.period_spinner)[0]){
+            periodValue *= 12
+        }
 
     }
 
@@ -236,21 +248,40 @@ class MainActivity : AppCompatActivity() {
 
     private fun calculateCompoundInterestWithMonthlyContribution() {
 
-        val calcResult =
-            initialInvestmentValue * (BigDecimal.ONE + interestRateValue).pow(periodValue) + monthlyContributionValue * (((BigDecimal.ONE + interestRateValue).pow(
-                periodValue
-            ) - BigDecimal.ONE) / interestRateValue)
+        val scale = 10
+        val roundingMode = RoundingMode.HALF_UP
 
-val totalInterest = calcResult - initialInvestmentValue
+        val onePlusRate = BigDecimal.ONE.add(interestRateValue)
+        val power = onePlusRate.pow(periodValue, MathContext(scale))
+
+        val futureValueInitialInvestment = initialInvestmentValue.multiply(power)
+        val futureValueContributions = monthlyContributionValue.multiply(
+            (power.subtract(BigDecimal.ONE)).divide(interestRateValue, scale, roundingMode)
+        )
+        val calcResult = futureValueInitialInvestment.add(futureValueContributions)
+
+        val totalInvested =
+            initialInvestmentValue.add(monthlyContributionValue.multiply(periodValue.toBigDecimal()))
+
+        val totalInterest = calcResult.subtract(totalInvested)
+
         val formatSymbols = DecimalFormatSymbols().apply {
             decimalSeparator = ','
             groupingSeparator = '.'
         }
         val formatter = DecimalFormat("#,##0.00", formatSymbols)
+
         val calcResultString = formatter.format(calcResult)
         val totalInterestString = formatter.format(totalInterest)
-        val message =
-            String.format("Total Investido (Capital): R$ $initialInvestmentValue\n\nJuros Totais: $totalInterestString\n\nValor Total (Montante): $calcResultString")
+        val totalInvestedString = formatter.format(totalInvested)
+
+        val message = """
+        Total Investido (Capital): R$ $totalInvestedString
+
+        Juros Totais: R$ $totalInterestString
+
+        Valor Total (Montante): R$ $calcResultString
+        """.trimIndent()
 
         showAlert(message)
 
