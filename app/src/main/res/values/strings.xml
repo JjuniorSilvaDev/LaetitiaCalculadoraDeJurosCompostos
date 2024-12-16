@@ -4,11 +4,21 @@
     <string name="value_text">0,00</string>
     <string name="monthly_contribution_text">Aporte Mensal (R$)</string>
     <string name="interest_rate_text">Taxa de Juros (%)</string>
-    <string name="interest_rate_input_text">8</string>
+    <string name="interest_rate_input_text">8,00</string>
     <string name="period_text">Período de Tempo</string>
     <string name="period_value_text">12</string>
     <string name="calculate_text_button">Calcular</string>
     <string name="loading_text">Carregando…</string>
+    <string name="model_zero">0,00</string>
+    <string name="define_initial_or_monthly_contribution">Por Favor, defina o investimento inicial ou o valor do aporte mensal</string>
+    <string name="define_interest_rate">Por Favor, defina a taxa de juros</string>
+    <string name="define_period">Por Favor, defina o período de tempo</string>
+    <string name="ok">Ok</string>
+    <string name="creator"><u><i>Criado por Laetitia Apps</i></u></string>
+    <string name="app_title">Laetitia\nCalculadora de Juros Compostos</string>
+    <string name="laetitia_ads">Laetitia\nCalculadora de Juros Compostos\n\nVisite a nossa página na Play Store e descubra mais aplicativos incríveis!</string>
+    <string name="visit_the_store">Visitar a loja</string>
+    <string name="no_thanks">Não, Obrigado</string>
     <string-array name="interest_rate_spinner">
         <item>Ao Ano</item>
         <item>Ao Mês</item>

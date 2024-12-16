@@ -1,12 +1,12 @@
 package com.laetitia.calculadoradejuroscompostos
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ProgressBar
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -23,6 +23,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private lateinit var titleText: TextView
+    private lateinit var subTitleText: TextView
+
     private lateinit var initialInvestment: EditText
     private lateinit var monthlyContribution: EditText
     private lateinit var interestRate: EditText
@@ -35,10 +38,6 @@ class MainActivity : AppCompatActivity() {
     private var monthlyContributionValue: BigDecimal = BigDecimal.ZERO
     private var interestRateValue: BigDecimal = BigDecimal.ZERO
     private var periodValue: Int = 0
-
-    private lateinit var loadScreenView: View
-    private lateinit var loadProgressBar: ProgressBar
-    private lateinit var loadText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -54,6 +53,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun prepareBinding() {
         binding.apply {
+            titleText = appTitleFragment
+            subTitleText = appSubTitleFragment
             initialInvestment = initialInvestmentInputFragment
             monthlyContribution = monthlyContributionInputFragment
             interestRate = interestRateInputFragment
@@ -61,9 +62,6 @@ class MainActivity : AppCompatActivity() {
             period = periodInputFragment
             periodSpinner = periodSpinnerFragment
             calculateButton = calculateButtonFragment
-            loadScreenView = loadScreenViewFragmen
-            loadProgressBar = loadProgressBarFragment
-            loadText = loadTextViewFragment
         }
     }
 
@@ -71,9 +69,48 @@ class MainActivity : AppCompatActivity() {
         setupDecimalEditText(initialInvestment)
         setupDecimalEditText(monthlyContribution)
         setupDecimalEditText(interestRate)
-        loadScreenView.setOnClickListener { }
         calculateButton.setOnClickListener {
             checkFields()
+        }
+        titleText.setOnClickListener {
+            showLaetitiaAppsAdd()
+        }
+        subTitleText.setOnClickListener {
+            showLaetitiaAppsAdd()
+        }
+    }
+
+    private fun showLaetitiaAppsAdd() {
+        AlertDialog.Builder(this)
+            .setMessage(getString(R.string.laetitia_ads))
+            .setCancelable(false)
+            .setPositiveButton(getString(R.string.visit_the_store)) { dialog, _ ->
+                dialog.dismiss()
+                visitTheStore()
+            }
+            .setNegativeButton(getString(R.string.no_thanks)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
+    }
+
+    private fun visitTheStore() {
+        val linkToUse = "https://play.google.com/store/apps/dev?id=9075289877355073110&hl=pt_BR"
+        try {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(linkToUse)
+                )
+            )
+        } catch (e: android.content.ActivityNotFoundException) {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(linkToUse)
+                )
+            )
         }
     }
 
@@ -108,20 +145,20 @@ class MainActivity : AppCompatActivity() {
     private fun checkFields() {
 
         when {
-            (initialInvestment.text.isNullOrBlank() || initialInvestment.text.toString() == "0,00") &&
-                    (monthlyContribution.text.isNullOrBlank() || monthlyContribution.text.toString() == "0,00") -> {
-                showAlert("Por Favor, defina o investimento inicial ou o valor do aporte mensal")
+            (initialInvestment.text.isNullOrBlank() || initialInvestment.text.toString() == getString(R.string.model_zero)) &&
+                    (monthlyContribution.text.isNullOrBlank() || monthlyContribution.text.toString() == getString(R.string.model_zero)) -> {
+                showAlert(getString(R.string.define_initial_or_monthly_contribution))
             }
 
             interestRate.text.isNullOrBlank() -> {
-                showAlert("Por Favor, defina a taxa de juros")
+                showAlert(getString(R.string.define_interest_rate))
             }
 
             period.text.isNullOrBlank() -> {
-                showAlert("Por Favor, defina o período de tempo")
+                showAlert(getString(R.string.define_period))
             }
 
-            monthlyContribution.text.isNullOrBlank() || monthlyContribution.text.toString() == "0,00" -> {
+            monthlyContribution.text.isNullOrBlank() || monthlyContribution.text.toString() == getString(R.string.model_zero) -> {
 
                 valueAssignment()
 
@@ -146,7 +183,7 @@ class MainActivity : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setMessage(message)
             .setCancelable(false)
-            .setPositiveButton("Ok") { dialog, _ ->
+            .setPositiveButton(getString(R.string.ok)) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
@@ -183,34 +220,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun matchInterestRateTimeframeWithPeriod() {
 
-//        val newInterestValue: BigDecimal = when {
-//
-//            periodSpinner.selectedItem.toString() == resources.getStringArray(R.array.period_spinner)[0].toString() &&
-//                    interestRateSpinner.selectedItem.toString() == resources.getStringArray(R.array.interest_rate_spinner)[1].toString() -> {
-//
-//                (BigDecimal.ONE + interestRateValue).pow(12) - BigDecimal.ONE
-//
-//            }
-//
-//            periodSpinner.selectedItem.toString() == resources.getStringArray(R.array.period_spinner)[1].toString() &&
-//                    interestRateSpinner.selectedItem.toString() == resources.getStringArray(R.array.interest_rate_spinner)[0].toString() -> {
-//
-//                val monthlyRate = BigDecimal.ONE + interestRateValue
-//                val fractionalExponent =
-//                    BigDecimal("1").divide(BigDecimal("12"), 10, RoundingMode.HALF_UP)
-//
-//                val result = monthlyRate.toDouble().pow(fractionalExponent.toDouble())
-//                BigDecimal(result) - BigDecimal.ONE
-//
-//            }
-//
-//            else -> {
-//
-//                interestRateValue
-//
-//            }
-//
-//        }
 
         if (interestRateSpinner.selectedItem.toString() == resources.getStringArray(R.array.interest_rate_spinner)[0]){
             val monthlyRate = BigDecimal.ONE + interestRateValue
@@ -240,8 +249,7 @@ class MainActivity : AppCompatActivity() {
         val formatter = DecimalFormat("#,##0.00", formatSymbols)
         val calcResultString = formatter.format(calcResult)
         val totalInterestString = formatter.format(totalInterest)
-        val message =
-            String.format("Total Investido (Capital): R$ $initialInvestmentValue\n\nJuros Totais: $totalInterestString\n\nValor Total (Montante): $calcResultString")
+        val message = String.format("Total Investido (Capital):\nR$ $initialInvestmentValue\n\nJuros Totais:\nR$ $totalInterestString\n\nValor Total (Montante):\nR$ $calcResultString")
 
         showAlert(message)
     }
@@ -260,8 +268,7 @@ class MainActivity : AppCompatActivity() {
         )
         val calcResult = futureValueInitialInvestment.add(futureValueContributions)
 
-        val totalInvested =
-            initialInvestmentValue.add(monthlyContributionValue.multiply(periodValue.toBigDecimal()))
+        val totalInvested = initialInvestmentValue.add(monthlyContributionValue.multiply(periodValue.toBigDecimal()))
 
         val totalInterest = calcResult.subtract(totalInvested)
 
@@ -275,13 +282,7 @@ class MainActivity : AppCompatActivity() {
         val totalInterestString = formatter.format(totalInterest)
         val totalInvestedString = formatter.format(totalInvested)
 
-        val message = """
-        Total Investido (Capital): R$ $totalInvestedString
-
-        Juros Totais: R$ $totalInterestString
-
-        Valor Total (Montante): R$ $calcResultString
-        """.trimIndent()
+        val message = String.format("Total Investido (Capital):\nR$ $totalInvestedString\n\nJuros Totais:\nR$ $totalInterestString\n\nValor Total (Montante):\nR$ $calcResultString")
 
         showAlert(message)
 
